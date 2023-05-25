@@ -12,13 +12,15 @@ This is the official repository of CVPR'23 paper: [A Bag-of-Prototypes Represent
 
 
 ### Citation
-    @inproceedings{tu2023bop,
-      title={A Bag-of-Prototypes Representation for Dataset-Level Applications},
-      author={Tu, Weijie and Deng, Weijian and Gedeon, Tom and Liang, Zheng},
-      booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-      year={2023}
-    }
+ ```bibtex
+@inproceedings{tu2023bop,
+  title={A Bag-of-Prototypes Representation for Dataset-Level Applications},
+  author={Tu, Weijie and Deng, Weijian and Gedeon, Tom and Liang, Zheng},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year={2023}
+}
+```
 
 
-# License
+### License
 MIT
