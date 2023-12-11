@@ -1,26 +1,65 @@
 # Bag-of-Prototypes
 
-This codebase provides an official implementation for the paper: [A Closer Look at the Robustness of Contrastive
-Language-Image Pre-Training (CLIP)](https://openreview.net/forum?id=wMNpMe0vp3) at NeurIPS 2023.
+This codebase provides an official implementation for the paper: [A Bag-of-Prototypes Representation for Dataset-Level Applications](https://arxiv.org/abs/2303.13251) at CVPR 2023.
 
 ### Abstract
-Contrastive Language-Image Pre-training (CLIP) models have demonstrated remarkable generalization capabilities across multiple challenging distribution shifts. However, there is still much to be explored in terms of their robustness to the variations of specific visual factors. In real-world applications, reliable and safe systems must consider other safety objectives beyond classification accuracy, such as predictive uncertainty. Yet, the effectiveness of CLIP models on such safetyrelated features is less-explored. Driven by the above, this work comprehensively investigates the safety objectives of CLIP models, specifically focusing on three key properties: resilience to visual factor variations, calibrated uncertainty estimations, and the ability to detect anomalous inputs. To this end, we study 83 CLIP models and 127 ImageNet classifiers. They are diverse in architecture, (pre)training distribution and training strategies. We consider 10 visual factors (e.g., shape and pattern), 5 types of out-of-distribution data, and 8 natural and challenging test conditions with different shift types, such as texture, style, and perturbation shifts. Our study has unveiled several previously unknown insights into CLIP models. For instance, they are not consistently more calibrated than other ImageNet models, which contradicts existing findings. Additionally, our analysis underscores the significance of training source design by showcasing its profound influence on the three key properties. We believe our comprehensive study can shed light on and help guide the development of more robust and reliable CLIP models.
+This work investigates dataset vectorization for two dataset-level tasks: assessing training set suitability and test set difficulty. The former measures how suitable a training set is for a target domain, while the latter studies how challenging a test set is for a learned model. Central to the two tasks is measuring the underlying relationship between datasets. This needs a desirable dataset vectorization scheme, which should preserve as much discriminative dataset information as possible so that the distance between the resulting dataset vectors can reflect dataset-to-dataset similarity. To this end, we propose a bag-of-prototypes (BoP) dataset representation that extends the image-level bag consisting of patch descriptors to dataset-level bag consisting of semantic prototypes. Specifically, we develop a codebook consisting of K prototypes clustered from a reference dataset. Given a dataset to be encoded, we quantize each of its image features to a certain prototype in the codebook and obtain a K-dimensional histogram. Without assuming access to dataset labels, the BoP representation provides rich characterization of the dataset semantic distribution. Furthermore, BoP representations cooperate well with Jensen-Shannon divergence for measuring dataset-to-dataset similarity. Although very simple, BoP consistently shows its advantage over existing representations on a series of benchmarks for two dataset-level tasks.
+
+<figure class="image">
+  <p align="center">
+    <img src="flow_chart.png" width="60%" height="60%" />
+  </p>
+</figure>
 
 ## PyTorch Implementation
 
 This repository contains:
 
-- the Python implementation of evluation codes.
+- the Python implementation of BoP.
+- the example on CIFAR-10 setup
 
 Please follow the instruction below to install it and run the experiment demo.
 
+### Prerequisites
+* Please install Numpy and scikit-learn
+* [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html) (download and unzip to ```PROJECT_DIR/data/```)
+* [CIFAR10.1](https://github.com/modestyachts/CIFAR-10.1) (download and unzip to ```PROJECT_DIR/data/CIFAR-10.1```)
+* You might need to change the file paths, and please be sure you change the corresponding paths in the codes as well 
+
+## Getting started
+0. Load extracted image features
+```python
+   import numpy as np
+   # Load image features of the reference dataset
+   # It should be of size (n, d), n is the number of images, and d is the feature dimension
+   ref_feature = np.load('/path/to/features/cifar10_train.npy')
+   
+   # Load image features of the target dataset
+   target_feature = np.load('/path/to/features/target.npy')
+```
+
+1. Generate the codebook
+```python
+   from BoP import BoP
+   # Generate the codebook based on the reference dataset
+   codebook = BoP(ref_data=ref_feature, n_prototype=80, cache_path='/path/to/save/')
+```
+
+2. Evaluate
+```python
+   # Encode the target dataset and measure the distance
+   results = codebook.evaluate(target_feature)
+   
+   print(f'The BoP of encoded dataset is {results['BoP']}')
+   print(f'The distance is {results['JS']}')
+```
+
 ## Citation
  ```bibtex
-@inproceedings{tu2023closer,
-  title={A Closer Look at the Robustness of Contrastive
-Language-Image Pre-Training (CLIP)},
-  author={Tu, Weijie and Deng, Weijian and Gedeon, Tom},
-  booktitle={Advances on Neural Information Processing Systems},
+@inproceedings{tu2023bop,
+  title={A Bag-of-Prototypes Representation for Dataset-Level Applications},
+  author={Tu, Weijie and Deng, Weijian and Gedeon, Tom and Liang, Zheng},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
   year={2023}
 }
 ```
