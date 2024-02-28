@@ -13,6 +13,10 @@ This work investigates dataset vectorization for two dataset-level tasks: assess
 
 ## PyTorch Implementation
 
+### Note
+
+The current implementation of K-Means is from scikit-learn. To speed up the construction of codebook, [torch-kmeans](https://pypi.org/project/torch-kmeans/) can be used.
+
 This repository contains:
 
 - the Python implementation of BoP.
