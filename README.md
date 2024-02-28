@@ -1,3 +1,7 @@
+### $\textsf{\color{red}Update:}$
+
+The current implementation of K-Means is from scikit-learn, which only use CPU for codebood construction. [torch-kmeans](https://pypi.org/project/torch-kmeans/) can utilise a GPU to significantly speed up codebook construction.
+
 # Bag-of-Prototypes
 
 This codebase provides an official implementation for the paper: [A Bag-of-Prototypes Representation for Dataset-Level Applications](https://arxiv.org/abs/2303.13251) at CVPR 2023.
@@ -12,10 +16,6 @@ This work investigates dataset vectorization for two dataset-level tasks: assess
 </figure>
 
 ## PyTorch Implementation
-
-### $\textsf{\color{red}Update}$
-
-The current implementation of K-Means is from scikit-learn, which only use CPU for codebood construction. [torch-kmeans](https://pypi.org/project/torch-kmeans/) can utilise a GPU to significantly speed up codebook construction.
 
 This repository contains:
 
