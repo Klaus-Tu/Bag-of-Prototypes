@@ -13,9 +13,9 @@ This work investigates dataset vectorization for two dataset-level tasks: assess
 
 ## PyTorch Implementation
 
-### Note
+### $\textsf{\color{red}Update}$
 
-The current implementation of K-Means is from scikit-learn. To speed up the construction of codebook, [torch-kmeans](https://pypi.org/project/torch-kmeans/) can be used.
+The current implementation of K-Means is from scikit-learn, which only use CPU for codebood construction. [torch-kmeans](https://pypi.org/project/torch-kmeans/) can utilise a GPU to significantly speed up codebook construction.
 
 This repository contains:
 
